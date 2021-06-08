@@ -1,9 +1,10 @@
 # Contributor: He Yangxuan <yangxuan8282@gmail.com>
 # Contributor: Timo Teras <timo.teras@iki.fi>
+# Contributor: Maxim Karasev <begs@disroot.org>
 # Maintainer: Milan P. Stanić <mps@arvanta.net>
 pkgname=u-boot
 pkgver=2021.04
-pkgrel=0
+pkgrel=1
 pkgdesc="u-boot bootloader common files"
 url="https://www.denx.de/wiki/U-Boot/"
 arch="all !s390x !ppc64le"
@@ -12,7 +13,7 @@ license="GPL-2.0-or-later OFL-1.1 BSD-2-Clause BSD-3-Clause eCos-2.0 IBM-pibs
 makedepends="$depends_dev bc dtc python3-dev swig bison flex openssl-dev
 	py3-setuptools linux-headers"
 if [ "$CARCH" = "aarch64" ]; then
-	makedepends="$makedepends arm-trusted-firmware-sun50i"
+	makedepends="$makedepends arm-trusted-firmware"
 fi
 source="https://ftp.denx.de/pub/u-boot/u-boot-${pkgver//_/-}.tar.bz2
 	README.txt
@@ -44,6 +45,7 @@ aarch64) board_configs="
 	qemu:qemu_arm64
 	pine64:pine64-lts
 	pinebook:pinebook
+	orangepi:orangepi_3
 	";;
 esac
 
@@ -71,7 +73,10 @@ build() {
 
 			case "$board" in
 				"pine64-lts"|"pinebook")
-					export BL31="/usr/share/arm-trusted-firmware-sun50i/bl31.bin"
+					export BL31="/usr/share/arm-trusted-firmware/sun50i_a64/bl31.bin"
+					;;
+				"orangepi_3")
+					export BL31="/usr/share/arm-trusted-firmware/sun50i_h6/bl31.bin"
 					;;
 			esac
 
