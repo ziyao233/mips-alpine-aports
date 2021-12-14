@@ -5,7 +5,7 @@ description="DHCP Client Daemon"
 command="/sbin/dhcpcd"
 command_args="-q ${command_args:-}"
 command_args_foreground="-B"
-pidfile="/run/dhcpcd.pid"
+pidfile="/run/dhcpcd/pid"
 
 depend() {
 	provide net
