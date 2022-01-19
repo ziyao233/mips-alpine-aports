@@ -1,0 +1,16 @@
+#!/sbin/openrc-run
+
+description="Starts or Stops the Softether VPN Server"
+procname="vpnserver"
+
+start(){
+	ebegin "Starting Softether VPN Server"
+	/usr/bin/vpnserver start
+	eend $?
+}
+
+stop(){
+	ebegin "Stopping Softether VPN Server"
+	/usr/bin/vpnserver stop
+	eend $?
+}
