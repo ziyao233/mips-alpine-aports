@@ -1,0 +1,14 @@
+diff --git a/src/dird/ua_server.c b/src/dird/ua_server.c
+index 75342a3bfa..d8d767e81f 100644
+--- a/src/dird/ua_server.c
++++ b/src/dird/ua_server.c
+@@ -126,7 +126,9 @@ static void *handle_UA_client_request(void *arg)
+    JCR *jcr;
+    BSOCK *user = (BSOCK *)arg;
+ 
+-   pthread_detach(pthread_self());
++   // Alpine: We know the thread is already detached (src/lib/workq.c:74).
++   // Detaching it again would crash on musl, so we disable this call
++   // pthread_detach(pthread_self());
+ 
+    jcr = new_control_jcr("-Console-", JT_CONSOLE);
